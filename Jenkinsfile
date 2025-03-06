@@ -6,12 +6,12 @@ pipeline {
     }
 
     stages {
-        stage('Checkout') {
+      /*  stage('Checkout') {
             steps {
                 git branch: "${env.BRANCH_NAME}", url: 'https://github.com/franciscboll/pin-pipeline.git'
             }
         }
-
+      */
         stage('Build Docker Image') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', passwordVariable: 'DOCKER_HUB_PASSWORD', usernameVariable: 'DOCKER_HUB_USERNAME')]) {
