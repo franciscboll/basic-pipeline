@@ -25,21 +25,16 @@ pipeline {
             }
         }
 
-            stage('Lint & Security Scan') {
-            steps {
-                script {
-                       sh 'docker run --rm -v $(pwd):/app -w /app node:14 npm install'
-                       sh 'docker run --rm -v $(pwd):/app -w /app node:14 npm run lint'
-                       sh "docker run --rm aquasec/trivy image ${DOCKER_IMAGE_NAME}:${env.BUILD_NUMBER}"
-        }
-                     }
-            }
 
-            stage('Test') {
+            stage('Test Security Scan') {
             steps {
                 script {
                     // Run the container and execute tests inside it
                     sh " docker run --rm ${DOCKER_IMAGE_NAME}:${env.BUILD_NUMBER} npm test"
+
+                    sh " docker run --rm ${DOCKER_IMAGE_NAME}:${env.BUILD_NUMBER} npm run lint"
+
+                    sh "docker run --rm aquasec/trivy image ${DOCKER_IMAGE_NAME}:${env.BUILD_NUMBER}"
                 }
             }
         }
