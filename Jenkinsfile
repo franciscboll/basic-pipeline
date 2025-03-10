@@ -30,6 +30,13 @@ pipeline {
                 withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', passwordVariable: 'DOCKER_HUB_PASSWORD', usernameVariable: 'DOCKER_HUB_USERNAME')]) {
                     sh "echo ${DOCKER_HUB_PASSWORD} |  docker login -u ${DOCKER_HUB_USERNAME} --password-stdin"
                     sh "docker build -t ${DOCKER_IMAGE_NAME}:${env.BUILD_NUMBER} ."
+
+                    // Pull latest image for caching
+                    sh "docker pull ${DOCKER_IMAGE_NAME}:latest || true"
+            
+                     // Build the image using cache from the latest image
+                    sh "docker build --cache-from=${DOCKER_IMAGE_NAME}:latest -t ${DOCKER_IMAGE_NAME}:${env.BUILD_NUMBER} ."
+        
                 }
             }
         }
@@ -75,5 +82,15 @@ pipeline {
                 }
             }
         }
+    }
+
+    success {
+        echo "✅ Build ${env.BUILD_NUMBER} succeeded!"
+        sh 'curl -X POST -H "Content-Type: application/json" -d \'{"text": "✅ Jenkins Build #${env.BUILD_NUMBER} Succeeded!"}\' YOUR_WEBHOOK_URL'
+    }
+    
+    failure {
+        echo "❌ Build ${env.BUILD_NUMBER} failed!"
+        sh 'curl -X POST -H "Content-Type: application/json" -d \'{"text": "❌ Jenkins Build #${env.BUILD_NUMBER} Failed!"}\' YOUR_WEBHOOK_URL'
     }
 }
