@@ -3,20 +3,15 @@
 const config = [
     {
       languageOptions: {
-        ecmaVersion: 12,  // Usa ECMAScript 2021
-        sourceType: 'module',  // Permite usar import/export
+        ecmaVersion: 12, // ECMAScript 2021
+        sourceType: 'module',
       },
       plugins: {
-        node: require('eslint-plugin-node'),  // Asegúrate de tener el plugin correctamente configurado
+        node: require('eslint-plugin-node'),
       },
       rules: {
-        // Aquí puedes agregar tus reglas personalizadas
-      },
-    },
-    // Configuración adicional (como reglas recomendadas)
-    {
-      rules: {
-        'node/no-unsupported-features/es-syntax': 'off',  // Ejemplo de regla
+        // Desactiva la regla que causa el error
+        'node/no-unsupported-features/es-syntax': 'off',
       },
     },
   ];
