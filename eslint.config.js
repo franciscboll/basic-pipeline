@@ -2,8 +2,7 @@
 /** @type {import('eslint').Linter.Config} */
 const config = [
     {
-      // Configuración recomendada de ESLint
-      parserOptions: {
+      languageOptions: {
         ecmaVersion: 12,  // Usa ECMAScript 2021
         sourceType: 'module',  // Permite usar import/export
       },
