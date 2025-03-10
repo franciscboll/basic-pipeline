@@ -86,11 +86,9 @@ pipeline {
 
     success {
         echo "✅ Build ${env.BUILD_NUMBER} succeeded!"
-        sh 'curl -X POST -H "Content-Type: application/json" -d \'{"text": "✅ Jenkins Build #${env.BUILD_NUMBER} Succeeded!"}\' YOUR_WEBHOOK_URL'
     }
     
     failure {
         echo "❌ Build ${env.BUILD_NUMBER} failed!"
-        sh 'curl -X POST -H "Content-Type: application/json" -d \'{"text": "❌ Jenkins Build #${env.BUILD_NUMBER} Failed!"}\' YOUR_WEBHOOK_URL'
     }
 }
