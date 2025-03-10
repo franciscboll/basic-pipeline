@@ -5,10 +5,10 @@ const config = [
       languageOptions: {
         ecmaVersion: 12,  // Usa ECMAScript 2021
         sourceType: 'module',  // Permite usar import/export
-      },
-      env: {
-        node: true,  // Define el entorno como Node.js
-        es2021: true,  // Habilita las características modernas de ECMAScript
+        globals: {
+          // Define las variables globales
+          MyGlobalVar: 'readonly',  // ejemplo de una variable global solo lectura
+        },
       },
       rules: {
         // Aquí puedes agregar tus reglas personalizadas
