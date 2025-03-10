@@ -72,14 +72,13 @@ pipeline {
     }
 
     post {
-        always {
-            script {
-                try {
-                    // Cleanup: Remove the built Docker image from the local machine
-                    sh "docker rmi ${DOCKER_IMAGE_NAME}:${env.BUILD_NUMBER}"
-                } catch (Exception e) {
-                    echo 'Failed to remove Docker image.'
-                }
+    always {
+        script {
+            try {
+                // Cleanup: Remove the built Docker image from the local machine
+                sh "docker rmi ${DOCKER_IMAGE_NAME}:${env.BUILD_NUMBER}"
+            } catch (Exception e) {
+                echo 'Failed to remove Docker image.'
             }
         }
     }
@@ -91,4 +90,7 @@ pipeline {
     failure {
         echo "❌ Build ${env.BUILD_NUMBER} failed!"
     }
+   }
+
+
 }
