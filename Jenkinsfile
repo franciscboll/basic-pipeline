@@ -27,14 +27,11 @@ pipeline {
 
             stage('Lint & Security Scan') {
             steps {
-                 script {
-                     // Run npm install and linting inside a Node.js container
-                     sh "docker run --rm -v $(pwd):/app -w /app node:14 npm install"
-                     sh "docker run --rm -v $(pwd):/app -w /app node:14 npm run lint"
-
-                     // Perform a security scan on the Docker image using Trivy
-                     sh "docker run --rm aquasec/trivy image ${DOCKER_IMAGE_NAME}:${env.BUILD_NUMBER}"
-                          }
+                script {
+                       sh 'docker run --rm -v $(pwd):/app -w /app node:14 npm install'
+                       sh 'docker run --rm -v $(pwd):/app -w /app node:14 npm run lint'
+                       sh "docker run --rm aquasec/trivy image ${DOCKER_IMAGE_NAME}:${env.BUILD_NUMBER}"
+        }
                      }
             }
 
