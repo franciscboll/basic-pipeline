@@ -8,22 +8,6 @@ pipeline {
 
     stages {
 
-        stage('Lint & Security Scan') {
-            steps {
-                 script {
-                     // Install project dependencies to ensure linting can run
-                     sh "npm install"
-
-                     // Run linting to check for code style and potential issues
-                     sh "npm run lint"
-
-                     // Perform a security scan on the Docker image using Trivy
-                     // This checks for vulnerabilities in OS packages and application dependencies
-                     sh "docker run --rm aquasec/trivy image ${DOCKER_IMAGE_NAME}:${env.BUILD_NUMBER}"
-                 }
-            }
-        }
-
         stage('Build Docker Image') {
             steps {
                 // Authenticate with Docker Hub using stored credentials
@@ -38,6 +22,22 @@ pipeline {
                     sh "docker build --cache-from=${DOCKER_IMAGE_NAME}:latest -t ${DOCKER_IMAGE_NAME}:${env.BUILD_NUMBER} ."
         
                 }
+            }
+        }
+
+            stage('Lint & Security Scan') {
+            steps {
+                 script {
+                     // Install project dependencies to ensure linting can run
+                     sh "npm install"
+
+                     // Run linting to check for code style and potential issues
+                     sh "npm run lint"
+
+                     // Perform a security scan on the Docker image using Trivy
+                     // This checks for vulnerabilities in OS packages and application dependencies
+                     sh "docker run --rm aquasec/trivy image ${DOCKER_IMAGE_NAME}:${env.BUILD_NUMBER}"
+                 }
             }
         }
 
