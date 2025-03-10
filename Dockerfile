@@ -1,17 +1,20 @@
-# Usa una imagen base de Node.js
-FROM node:14
+# Use a Node.js base image (e.g., Node.js 18)
+FROM node:18
 
-# Establece el directorio de trabajo
+# Set the working directory inside the container
 WORKDIR /usr/src/app
 
-# Copia los archivos de la aplicación
+# Copy the package.json and package-lock.json (if exists)
 COPY package*.json ./
-RUN npm install
-RUN npm install --save-dev eslint
+
+# Install dependencies including eslint
+RUN npm install --save-dev eslint@latest
+
+# Copy the rest of the application code into the container
 COPY . .
 
-# Exponer el puerto en el que la aplicación escuchará
+# Expose the container port (optional, depending on your app)
 EXPOSE 3000
 
-# Comando para ejecutar la aplicación
-CMD [ "npm", "start" ]
+# Start the application (or another command as needed)
+CMD ["npm", "start"]
