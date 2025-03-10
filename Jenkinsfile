@@ -28,20 +28,17 @@ pipeline {
             stage('Lint & Security Scan') {
             steps {
                  script {
-                     // Install project dependencies to ensure linting can run
-                     sh "npm install"
-
-                     // Run linting to check for code style and potential issues
-                     sh "npm run lint"
+                     // Run npm install and linting inside a Node.js container
+                     sh "docker run --rm -v $(pwd):/app -w /app node:14 npm install"
+                     sh "docker run --rm -v $(pwd):/app -w /app node:14 npm run lint"
 
                      // Perform a security scan on the Docker image using Trivy
-                     // This checks for vulnerabilities in OS packages and application dependencies
                      sh "docker run --rm aquasec/trivy image ${DOCKER_IMAGE_NAME}:${env.BUILD_NUMBER}"
-                 }
+                          }
+                     }
             }
-        }
 
-        stage('Test') {
+            stage('Test') {
             steps {
                 script {
                     // Run the container and execute tests inside it
@@ -50,7 +47,7 @@ pipeline {
             }
         }
 
-        stage('Push Docker Image') {
+            stage('Push Docker Image') {
             steps {
                 script {
                     // Authenticate again with Docker Hub
