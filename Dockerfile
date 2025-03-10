@@ -7,6 +7,7 @@ WORKDIR /usr/src/app
 # Copia los archivos de la aplicación
 COPY package*.json ./
 RUN npm install
+RUN npm install --save-dev eslint
 COPY . .
 
 # Exponer el puerto en el que la aplicación escuchará
