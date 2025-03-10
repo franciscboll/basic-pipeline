@@ -1,19 +1,28 @@
 // eslint.config.js
-module.exports = {
-    extends: [
-      'eslint:recommended',  // Establece las reglas recomendadas por ESLint
-      'plugin:node/recommended' // Añade las reglas recomendadas para Node.js (opcional)
-    ],
-    env: {
-      node: true,  // Define el entorno de Node.js
-      es2021: true  // Habilita las características modernas de JavaScript
+/** @type {import('eslint').Linter.Config} */
+const config = [
+    {
+      // Configuración recomendada de ESLint
+      parserOptions: {
+        ecmaVersion: 12,  // Usa ECMAScript 2021
+        sourceType: 'module',  // Permite usar import/export
+      },
+      env: {
+        node: true,  // Define el entorno como Node.js
+        es2021: true,  // Habilita las características modernas de ECMAScript
+      },
+      rules: {
+        // Aquí puedes agregar tus reglas personalizadas
+      },
     },
-    parserOptions: {
-      ecmaVersion: 12,  // Usa la versión de ECMAScript que prefieras
-      sourceType: 'module',  // Para usar imports/export en lugar de require
+    // Configuración adicional (como reglas recomendadas)
+    {
+      plugins: ['node'],  // Asegúrate de tener el plugin 'node' instalado si lo usas
+      rules: {
+        'node/no-unsupported-features/es-syntax': 'off', // Ejemplo de regla
+      },
     },
-    rules: {
-      // Aquí puedes agregar reglas personalizadas
-    },
-  };
+  ];
+  
+  module.exports = config;
   
