@@ -8,6 +8,7 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 
 # Install dependencies including eslint
+RUN npm install
 RUN npm install --save-dev eslint@latest
 
 # Copy the rest of the application code into the container
