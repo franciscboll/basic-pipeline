@@ -9,8 +9,8 @@ COPY package*.json ./
 
 # Install dependencies including eslint
 RUN npm install
-RUN npm install --save-dev eslint@latest
-RUN npm install --save-dev eslint-plugin-node@latest
+# RUN npm install --save-dev eslint@latest
+# RUN npm install --save-dev eslint-plugin-node@latest
 
 
 # Copy the rest of the application code into the container

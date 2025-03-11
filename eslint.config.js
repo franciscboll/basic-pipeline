@@ -10,7 +10,7 @@ const config = [
         node: require('eslint-plugin-node'),
       },
       rules: {
-        // Desactiva la regla que causa el error
+        // Desactivar la regla que causa el error
         'node/no-unsupported-features/es-syntax': 'off',
       },
     },
