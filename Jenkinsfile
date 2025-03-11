@@ -30,9 +30,9 @@ pipeline {
             steps {
                 script {
                     // Run the container and execute tests inside it
-                    sh " docker run --rm ${DOCKER_IMAGE_NAME}:${env.BUILD_NUMBER} npm test"
+                    sh "docker run --rm ${DOCKER_IMAGE_NAME}:${env.BUILD_NUMBER} npm test"
 
-                    // sh " docker run --rm ${DOCKER_IMAGE_NAME}:${env.BUILD_NUMBER} npm run lint"
+                    // sh "docker run --rm ${DOCKER_IMAGE_NAME}:${env.BUILD_NUMBER} npm run lint"
 
                     // sh "docker run --rm aquasec/trivy image ${DOCKER_IMAGE_NAME}:${env.BUILD_NUMBER}"
                 }
@@ -59,6 +59,22 @@ pipeline {
             }
         }
     }
+
+
+    /*        stage('Deploy Application') {
+            steps {
+                script {
+                    sh "docker rm -f simple-node-app || true"
+                    sh """
+                        docker run -d -p 3000:3000 \
+                        --name simple-node-app \
+                        ${DOCKER_IMAGE_NAME}:${env.BUILD_NUMBER}
+                    """
+                }
+            }
+        }
+    }
+    */
 
     post {
     always {
