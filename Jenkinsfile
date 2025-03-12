@@ -14,7 +14,7 @@ pipeline {
                 // Authenticate with Docker Hub using stored credentials
                 withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', passwordVariable: 'DOCKER_HUB_PASSWORD', usernameVariable: 'DOCKER_HUB_USERNAME')]) {
                     sh "echo ${DOCKER_HUB_PASSWORD} |  docker login -u ${DOCKER_HUB_USERNAME} --password-stdin"
-                    sh "docker build -t ${DOCKER_IMAGE_NAME}-${env.BRANCH_NAME}-${env.BUILD_NUMBER}."
+                    sh "docker build -t ${DOCKER_IMAGE_NAME}-${env.BRANCH_NAME}-${env.BUILD_NUMBER} ."
 
                     // Pull latest image for caching
                     sh "docker pull ${DOCKER_IMAGE_NAME}:latest || true"
