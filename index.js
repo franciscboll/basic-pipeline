@@ -39,7 +39,7 @@ const server = http.createServer((req, res) => {
         </head>
         <body>
           <h1>¡Hola, Mundo!</h1>
-          <p>19/02 DEV - Servidor Node.js en funcionamiento</p>
+          <p>Servidor Node.js en funcionamiento</p>
           <p>Hora actual: ${new Date().toLocaleString()}</p>
           <div class="footer">
             <p>Servidor corriendo en http://localhost:${PORT}/</p>
