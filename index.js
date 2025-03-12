@@ -1,16 +1,11 @@
 const http = require('http');
 
-// Configura el puerto en el que escuchará el servidor
 const PORT = process.env.PORT || 3000;
 
-// Crea el servidor
 const server = http.createServer((req, res) => {
-  // Configurar las cabeceras para una respuesta más rica
-  res.setHeader('Content-Type', 'text/html');
-  
-  // Agregar rutas diferentes
+  res.setHeader('Content-Type', 'text/html; charset=utf-8'); // <-- Agregado UTF-8
+
   if (req.url === '/') {
-    // Respuesta principal con un mensaje de bienvenida y un toque visual
     res.statusCode = 200;
     res.end(`
       <html>
@@ -48,22 +43,19 @@ const server = http.createServer((req, res) => {
       </html>
     `);
   } else if (req.url === '/json') {
-    // Respuesta JSON si la ruta es "/json"
     res.statusCode = 200;
-    res.setHeader('Content-Type', 'application/json');
+    res.setHeader('Content-Type', 'application/json; charset=utf-8'); // <-- Agregado UTF-8
     res.end(JSON.stringify({
       message: '¡Hola, Mundo!',
       date: new Date().toLocaleString(),
       status: 'Servidor en ejecución'
     }));
   } else {
-    // Respuesta para rutas no encontradas
     res.statusCode = 404;
     res.end('<html><body><h1>404 Not Found</h1></body></html>');
   }
 });
 
-// Inicia el servidor y escucha en el puerto configurado
 server.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}/`);
 });
